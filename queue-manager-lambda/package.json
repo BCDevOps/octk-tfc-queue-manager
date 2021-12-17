@@ -1,0 +1,31 @@
+{
+  "name": "queue-manager-lambda",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/handler",
+  "scripts": {
+    "lint": "npx eslint src",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BCDevOps/octk-tfc-queue-manager.git"
+  },
+  "author": "unoah",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/BCDevOps/octk-tfc-queue-manager/issues"
+  },
+  "homepage": "https://github.com/BCDevOps/octk-tfc-queue-manager#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1046.0",
+    "axios": "^0.24.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1"
+  }
+}

@@ -1,0 +1,7 @@
+*.zip
+*.tfstate
+*.tfstate.*
+
+/.idea
+.terraform
+/queue-manager-lambda/node_modules/
