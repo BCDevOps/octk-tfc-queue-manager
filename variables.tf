@@ -15,7 +15,7 @@ variable "tfc_organization" {
 variable "tfc_api_endpoint" {
   description = "TFC API Endpoint"
 
-  type = string
+  type    = string
   default = "app.terraform.io"
 }
 

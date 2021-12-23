@@ -40,15 +40,6 @@ resource "aws_s3_bucket" "tfc_queue_manager_lambda_bucket" {
   force_destroy = false
 }
 
-resource "aws_s3_bucket_public_access_block" "tfc_queue_manager_lambda_bucket_public_access" {
-  bucket = aws_s3_bucket.tfc_queue_manager_lambda_bucket.id
-
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
-
 data "archive_file" "tfc_queue_manager" {
   type = "zip"
 
