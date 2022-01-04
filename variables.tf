@@ -19,6 +19,13 @@ variable "tfc_api_endpoint" {
   default = "app.terraform.io"
 }
 
+variable "tfc_api_page_size" {
+  description = "TFC API PageSize"
+
+  type    = number
+  default = 100
+}
+
 variable "rocketchat_endpoint" {
   description = "RocketChat Endpoint"
 

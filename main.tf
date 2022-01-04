@@ -92,12 +92,13 @@ resource "aws_lambda_function" "tfc_queue_manager" {
 
   runtime = "nodejs14.x"
   handler = "src/handler.handler"
-  timeout = 60
+  timeout = 120
 
   environment {
     variables = {
       "TFC_API_ENDPOINT"    = var.tfc_api_endpoint
       "TFC_ORGANIZATION"    = var.tfc_organization
+      "TFC_PAGE_SIZE"       = var.tfc_api_page_size
       "ROCKETCHAT_ENDPOINT" = var.rocketchat_endpoint
     }
   }
