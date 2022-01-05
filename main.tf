@@ -83,6 +83,14 @@ resource "aws_iam_role_policy_attachment" "lambda_parameter_store_readonly_polic
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
 }
 
+resource "aws_lambda_permission" "allow_execution_from_cloudwatch" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.tfc_queue_manager.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.tfc_queue_periodic_checker.arn
+}
+
 resource "aws_lambda_function" "tfc_queue_manager" {
   function_name = "TfcQueueManager"
   description   = "Simple TFC Queue Manager - Manages TFC Queues"
@@ -105,4 +113,15 @@ resource "aws_lambda_function" "tfc_queue_manager" {
 
   source_code_hash = data.archive_file.tfc_queue_manager.output_base64sha256
   role             = aws_iam_role.lambda_exec_role.arn
+}
+
+resource "aws_cloudwatch_event_rule" "tfc_queue_periodic_checker" {
+  name                = "TfcQueue-Periodic-Checker"
+  description         = "Query TFC workspaces periodic. Used to trigger the TfcQueueManager Lambda"
+  schedule_expression = "rate(10 minutes)"
+}
+
+resource "aws_cloudwatch_event_target" "tfc_queue_manager_target" {
+  arn  = aws_lambda_function.tfc_queue_manager.arn
+  rule = aws_cloudwatch_event_rule.tfc_queue_periodic_checker.name
 }
