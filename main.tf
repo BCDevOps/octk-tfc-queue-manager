@@ -100,7 +100,7 @@ resource "aws_lambda_function" "tfc_queue_manager" {
 
   runtime = "nodejs14.x"
   handler = "src/handler.handler"
-  timeout = 120
+  timeout = 240
 
   environment {
     variables = {
@@ -118,7 +118,7 @@ resource "aws_lambda_function" "tfc_queue_manager" {
 resource "aws_cloudwatch_event_rule" "tfc_queue_periodic_checker" {
   name                = "TfcQueue-Periodic-Checker"
   description         = "Query TFC workspaces periodic. Used to trigger the TfcQueueManager Lambda"
-  schedule_expression = "rate(10 minutes)"
+  schedule_expression = "rate(5 minutes)"
 }
 
 resource "aws_cloudwatch_event_target" "tfc_queue_manager_target" {

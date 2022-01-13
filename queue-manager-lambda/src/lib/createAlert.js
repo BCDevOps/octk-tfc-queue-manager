@@ -24,12 +24,14 @@ const createAlert = async (tfcChatPayload) => {
     console.error(err);
   }
 
+  // TFC Queue Manager: TFC run: < > in workspace <> is currently in <> status and auto-apply is set to <>.  This is blocking the queue.
+
   /* eslint-disable quotes */
   const tfcJobInfo = {
-    text: `TFC Queue Manager. TFC job:` +
-        `[${tfcChatPayload.runId}](https://${tfcEndpoint}/app/${tfcChatPayload.organizationId}/workspaces/${tfcChatPayload.workspaceName}/runs/${tfcChatPayload.runId})` +
+    text: `TFC Queue Manager. TFC run:` +
+        ` [${tfcChatPayload.runId}](https://${tfcEndpoint}/app/${tfcChatPayload.organizationId}/workspaces/${tfcChatPayload.workspaceName}/runs/${tfcChatPayload.runId})` +
         ` in workspace: [${tfcChatPayload.workspaceName}](https://${tfcEndpoint}/app/${tfcChatPayload.organizationId}/workspaces/${tfcChatPayload.workspaceName})` +
-        ` is currently blocking the queue.`,
+        ` is currently in ${tfcChatPayload.status} status and auto-apply is ${tfcChatPayload.autoApply}.`,
   };
   /* eslint-enable quotes */
 

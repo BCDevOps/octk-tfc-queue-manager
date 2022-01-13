@@ -1,20 +1,20 @@
-const { getLockedWorkspace } = require('./lib/getLockedWorkspace');
+const { getBlockingRuns } = require('./lib/workspaceRunInfo');
 const { createAlert } = require('./lib/createAlert');
 
 module.exports.handler = async () => {
 
   let rocketChatAlert;
   try {
-    const lockedWorkspace = await getLockedWorkspace();
-    if (!lockedWorkspace) {
-      return 'No locked workspace found.';
+    const blockingRun = await getBlockingRuns();
+    if (!blockingRun) {
+      console.log('No blocking runs found.');
     } else {
       const rocketChatPayload = {
-        workspaceId: lockedWorkspace['id'],
-        workspaceName: lockedWorkspace['attributes']['name'],
-        organizationId: lockedWorkspace['relationships']['organization']['data']['id'],
-        runId: lockedWorkspace['relationships']['locked-by']['data']['id'],
-        createdAt: lockedWorkspace['attributes']['created-at']
+        workspaceId: blockingRun['relationships']['workspace']['data']['id'],
+        runId: blockingRun['id'],
+        autoApply: blockingRun['attributes']['auto-apply'],
+        createdAt: blockingRun['attributes']['created-at'],
+        status: blockingRun['attributes']['status']
       };
       rocketChatAlert = createAlert(rocketChatPayload);
     }
