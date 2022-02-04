@@ -105,11 +105,19 @@ const getBlockingRuns = async () => {
 
       for (let workspaceIndex = 0; workspaceIndex < workspaces.length; workspaceIndex++) {
         if (workspaces[workspaceIndex]['attributes']['locked']) {
+          console.log(`Workspace ${workspaces[workspaceIndex]['id']} in locked state. Checking if this is the result of blocked run.`)
           try {
             const runInfo = await getRunInfo(workspaces[workspaceIndex]['relationships']['locked-by']['data']['id']);
+            const runObject = Object.assign({workspaceName: workspaces[workspaceIndex]['attributes']['name']}, runInfo)
             // Check if run is stuck in planned status and auto-apply is false
-            if (!runInfo['attributes']['auto-apply'] && runInfo['attributes']['status'] === 'planned') {
-              return runInfo;
+            if (runInfo['attributes']['actions']['is-confirmable'] && runInfo['attributes']['status'] === 'cost_estimated') {
+              return runObject;
+            }
+            else if (runInfo['attributes']['actions']['is-confirmable'] && runInfo['attributes']['status'] === 'planned') {
+              return runObject;
+            }
+            else if (runInfo['attributes']['actions']['is-confirmable'] && runInfo['attributes']['status'] === 'policy_checked') {
+              return runObject;
             }
           } catch (err) {
             return err;

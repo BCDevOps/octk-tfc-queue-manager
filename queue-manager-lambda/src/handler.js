@@ -10,6 +10,7 @@ module.exports.handler = async () => {
       console.log('No blocking runs found.');
     } else {
       const rocketChatPayload = {
+        workspaceName: blockingRun['workspaceName'],
         workspaceId: blockingRun['relationships']['workspace']['data']['id'],
         runId: blockingRun['id'],
         autoApply: blockingRun['attributes']['auto-apply'],

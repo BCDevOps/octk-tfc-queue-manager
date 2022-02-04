@@ -6,6 +6,7 @@ const createAlert = async (tfcChatPayload) => {
   /* eslint-disable no-undef */
   const rocketChatEndpoint = process.env.ROCKETCHAT_ENDPOINT;
   const tfcEndpoint = process.env.TFC_API_ENDPOINT;
+  const tfcOrganization = process.env.TFC_ORGANIZATION;
   /* eslint-enable no-undef */
 
   const ssmClient = new awsClient.SSM({
@@ -29,8 +30,8 @@ const createAlert = async (tfcChatPayload) => {
   /* eslint-disable quotes */
   const tfcJobInfo = {
     text: `TFC Queue Manager. TFC run:` +
-        ` [${tfcChatPayload.runId}](https://${tfcEndpoint}/app/${tfcChatPayload.organizationId}/workspaces/${tfcChatPayload.workspaceName}/runs/${tfcChatPayload.runId})` +
-        ` in workspace: [${tfcChatPayload.workspaceName}](https://${tfcEndpoint}/app/${tfcChatPayload.organizationId}/workspaces/${tfcChatPayload.workspaceName})` +
+        ` [${tfcChatPayload.runId}](https://${tfcEndpoint}/app/${tfcOrganization}/workspaces/${tfcChatPayload.workspaceName}/runs/${tfcChatPayload.runId})` +
+        ` in workspace: [${tfcChatPayload.workspaceName}](https://${tfcEndpoint}/app/${tfcOrganization}/workspaces/${tfcChatPayload.workspaceName})` +
         ` is currently in ${tfcChatPayload.status} status and auto-apply is ${tfcChatPayload.autoApply}.`,
   };
   /* eslint-enable quotes */
